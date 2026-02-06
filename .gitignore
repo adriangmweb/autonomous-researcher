@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+.venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (large files - track separately or use git-lfs)
+kb/data/*.csv
+kb/data/*.parquet
+kb/data/*.json
+kb/data/*.pkl
+kb/data/*.h5
+!kb/data/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+*.log
+
+# Model artifacts (too large for git)
+models/
+checkpoints/
+*.pt
+*.pth
+*.onnx
+*.safetensors
+wandb/
