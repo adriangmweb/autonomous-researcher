@@ -33,6 +33,9 @@ Thumbs.db
 .env
 *.log
 
+# Notion sync state (contains Notion page IDs, session-specific)
+kb/.notion-sync.json
+
 # Model artifacts (too large for git)
 models/
 checkpoints/
