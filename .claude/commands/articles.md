@@ -36,14 +36,16 @@ For each selected article:
 
 ### Article types to consider
 
-| Type | Source | Example angle |
+We are an **innovation lab**. Our content must reflect original thinking, rigorous evidence, and genuine contributions to the field. Not tutorials. Not marketing.
+
+| Type | What it is | Example angle |
 |---|---|---|
-| **Deep dive** | Findings, experiments | "How we improved search F1 by 81% with type hierarchies" |
-| **What we learned** | Anti-patterns, MEMORY.md | "5 things that DON'T improve e-commerce search (and what does)" |
-| **How-to guide** | Implementations, investigations | "Building a hybrid search evaluation framework from scratch" |
-| **Research report** | Experiment cycles, strategic reviews | "The search for better embeddings: comparing 12 models for fashion" |
-| **Decision story** | Decisions, rejected hypotheses | "Why we rejected HyDE despite the hype" |
-| **Methodology** | Evaluation design, GT construction | "Why your search evaluation is lying to you" |
+| **Original research** | Novel finding that advances the field. Based on our own experiments and data, not summarizing others' work. | "The BM25 enrichment U-curve: why enriching all your products makes search worse" |
+| **Benchmark study** | Rigorous comparative analysis with our own data. Saves practitioners thousands of euros and weeks of work. | "12 embedding models for fashion search: which wins and why" |
+| **Counter-narrative** | Dismantles a popular belief with methodical evidence. Contrarian + rigorous = lab credibility. | "Why neural rerankers destroy your hybrid search pipeline" |
+| **What we learned** | Distilled lessons from a research cycle. Not a listicle — a narrative with depth, showing the journey and the reasoning behind each lesson. | "What 5 rounds of search optimization taught us about diminishing returns" |
+| **Methodology** | Contribution to how research is done. Novel evaluation approaches, frameworks, or processes. | "Your search evaluation is lying to you: how ground truth distorts your metrics" |
+| **System architecture** | The design that emerged from experimentation. Not "how to build X" but "why each piece exists, justified by data." For CTOs and senior engineers. | "Anatomy of a fashion search engine: every piece justified by experiments" |
 
 ### Quality standards
 
