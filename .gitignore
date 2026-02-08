@@ -14,12 +14,12 @@ env/
 .ipynb_checkpoints/
 
 # Data (large files - track separately or use git-lfs)
-kb/data/*.csv
-kb/data/*.parquet
-kb/data/*.json
-kb/data/*.pkl
-kb/data/*.h5
-!kb/data/.gitkeep
+kb/research/data/*.csv
+kb/research/data/*.parquet
+kb/research/data/*.json
+kb/research/data/*.pkl
+kb/research/data/*.h5
+!kb/research/data/.gitkeep
 
 # OS
 .DS_Store
