@@ -16,12 +16,13 @@ _Why do we believe this might be true? What evidence or intuition supports it?_
 
 ## Test Plan
 
-_How will we test this hypothesis?_
+_How will we test this hypothesis? Be concrete — state exact commands and observable thresholds._
 
 - Experiment(s) to run: E{NUM}
 - Data needed: ...
 - Success metric: ...
-- Threshold for confirmation: ...
+- Confirm if: `{command}` → {specific threshold or output}
+- Reject if: `{command}` → {specific threshold or output}
 
 ## Evidence
 

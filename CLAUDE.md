@@ -27,7 +27,7 @@ These rules are ABSOLUTE. They survive memory compaction. Re-read them if unsure
 
 1. Read `kb/INDEX.md` — what knowledge exists
 2. Read `kb/mission/BACKLOG.md` — what task you were working on, what's next
-3. Read the task file (`kb/tasks/T{NUM}-slug.md`) for whatever task is IN_PROGRESS
+3. Read the task file (`kb/tasks/T{NUM}-slug.md`) for whatever task is IN_PROGRESS — the **Progress** section tells you exactly where you left off
 4. Read the **Lessons Learned** section at the bottom of this file
 5. Only then continue working
 
@@ -323,8 +323,10 @@ Executive summary in English. Context + result + next action. Not raw metrics �
 - Update `kb/mission/BACKLOG.md` after every significant step (task status changes)
 - Update `kb/INDEX.md` every time you create, close, or significantly update any kb/ artifact
 - Never keep findings only in conversation — write them to `kb/`
-- When you discover something unexpected, document it immediately
+- **Update the Progress section** in the current task/experiment/implementation file at every stopping point — this is your breadcrumb trail after compaction
+- When you discover something unexpected, write it to the **Surprises section** of the current artifact immediately — not just Observations, but what it means for the approach
 - When you learn a reusable lesson (mistake, anti-pattern, useful technique), add it to the **Lessons Learned** section below
+- When a step is stateful or destructive (expensive API calls, data migrations, model training), note recovery/retry instructions in the artifact
 
 ### Before ending a session:
 - Update `kb/mission/BACKLOG.md` with current task states and clear next steps
@@ -366,9 +368,12 @@ Every experiment file must contain:
 - **Hypothesis**: What we're testing (link to H{NUM})
 - **Setup**: Environment, dependencies, parameters
 - **Procedure**: Step-by-step what to run
-- **Expected outcome**: What would confirm/reject the hypothesis
+- **Expected outcome**: What would confirm/reject the hypothesis — stated as observable commands and outputs
+- **Progress**: Checkpoint trail updated at every stopping point
 - **Actual results**: Raw data and observations
+- **Surprises**: Unexpected findings that shaped the approach, with evidence
 - **Analysis**: Interpretation of results
+- **Recovery**: If steps are expensive/stateful, how to retry or clean up
 - **Decision**: What this means for the research direction
 
 ## Implementation Standards (Engineering flow)
@@ -377,7 +382,9 @@ Every implementation must have:
 - **Feature spec reference**: Link to the feature file
 - **Approach chosen**: Link to investigation and DECISIONS.md entry
 - **Code location**: Where the code lives
-- **Tests**: What is tested and how to run them
+- **Progress**: Checkpoint trail updated at every stopping point
+- **Validation**: Exact commands and expected outputs to verify the implementation works
+- **Surprises**: Unexpected findings during implementation, with evidence
 - **Status**: In progress / delivered / needs iteration
 
 ## Code & Project Structure

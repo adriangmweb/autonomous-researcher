@@ -16,15 +16,11 @@ _Where does this code live?_
 - `src/...`
 - ...
 
-## Progress Log
+## Progress
 
-_Track major implementation milestones and decisions made along the way._
+_Update at every stopping point. After compaction, this is how you know where you left off._
 
-### {date}
-- ...
-
-### {date}
-- ...
+- [ ] (`{date}`) {Step description}
 
 ## Technical Decisions
 
@@ -32,13 +28,19 @@ _Smaller decisions made during implementation (not big enough for DECISIONS.md).
 
 - ...
 
-## Tests
+## Surprises
 
-- **How to run**: `...`
-- **Coverage**: ...
+_Unexpected findings during implementation that shaped the approach. Not reusable lessons — local context for this task._
+
+## Validation
+
+_State as observable behavior: exact commands and expected outputs._
+
+- `{test command}` → {expected result, e.g., "12 passed, 0 failed"}
+- `{manual verification command}` → {expected output}
 - [ ] Unit tests
 - [ ] Integration tests
-- [ ] Manual testing done
+- [ ] Manual verification
 
 ## Known Limitations
 

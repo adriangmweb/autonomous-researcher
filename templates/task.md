@@ -11,7 +11,20 @@
 
 ## Acceptance Criteria
 
+_State as observable behavior: exact commands to run and expected outputs._
+
+- [ ] `{command}` → {expected output or behavior}
 - [ ] ...
+
+## Progress
+
+_Update this section at every stopping point. After compaction, this is how you know where you left off._
+
+- [ ] (`{date}`) {Step description}
+
+## Surprises
+
+_Unexpected findings that shaped the work. Not reusable lessons (those go in Lessons Learned) — task-specific context that the next session needs._
 
 ## Linked Artifacts
 
@@ -19,4 +32,4 @@
 
 ## Notes
 
-{Additional context, blockers, dependencies}
+{Additional context, blockers, dependencies. If a step is stateful or destructive, note how to retry or recover.}
