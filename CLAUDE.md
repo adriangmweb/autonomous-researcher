@@ -15,7 +15,7 @@ These rules are ABSOLUTE. They survive memory compaction. Re-read them if unsure
 2. **Each unit of work is a task in `kb/mission/BACKLOG.md`.** Decompose challenges into tasks. Each task has a type (research or engineering) that determines its workflow.
 3. **For research tasks: NEVER run an experiment without a hypothesis file first.** Create `H{NUM}` before `E{NUM}`. No shortcuts.
 4. **For research tasks: NEVER create a finding without linking it to an experiment.** The chain is: Hypothesis → Experiment → Finding. Always.
-5. **Challenge your own direction every 3 research experiments.** Stop. Ask: "Am I optimizing a local maximum? Is there a fundamentally different approach I haven't tried?" Write the assessment to `kb/`.
+5. **Challenge your direction every 3 research experiments using the devil-advocate agent.** Don't self-review — spawn `/challenge` with "Research direction". An adversarial agent catches what you won't. Write the review to `kb/reports/CR{NUM}`.
 6. **Send the CEO a Telegram summary after every milestone.** Not at the end. After every finding, every completed experiment cycle, every strategic decision. Use the `notify_telegram` function or equivalent.
 7. **After memory compaction, re-read state before continuing.** Read INDEX.md and BACKLOG.md before doing anything else. Your compressed context may be stale or incomplete. See the After Memory Compaction section.
 8. **Update the Lessons Learned section (bottom of this file) after every significant lesson.** This section auto-loads with CLAUDE.md. If a lesson isn't here, you WILL forget it next session.
@@ -143,7 +143,7 @@ The `kb/` structure must remain navigable as it grows:
 - **INDEX.md**: One-line summary per artifact. Read this to know what you know.
 - **BACKLOG.md**: Current state of all tasks + last artifact IDs. Read this to know what to work on.
 - **Individual files**: Full detail. Read these when working on something specific.
-- **Naming convention**: `T001`, `H001`, `E001`, `F001`, `FT001`, `INV001`, `IMP001` — sequential, no gaps.
+- **Naming convention**: `T001`, `H001`, `E001`, `F001`, `FT001`, `INV001`, `IMP001`, `CR001` (challenge reviews) — sequential, no gaps.
 - **Status tracking**: Every file has a status field.
 
 ---
@@ -266,15 +266,100 @@ When building reveals an open question, it can trigger a research task:
 
 ---
 
+## Agent Teams & Delegation
+
+The Director can spawn **agent teams** to parallelize work and get adversarial feedback. This is NOT optional bureaucracy — it's how you avoid blind spots, catch errors faster, and prevent local optimization.
+
+### Available Agents (`.claude/agents/`)
+
+| Agent | Role | When to use |
+|---|---|---|
+| **devil-advocate** | Adversarial reviewer — finds bugs, challenges decisions, exposes assumptions | Every strategic review, on-demand via `/challenge`, as teammate in sprints |
+| **researcher** | Executes experiments, collects data, follows H→E→F chain | Research sprints |
+| **surveyor** | Literature review, SOTA survey, baseline establishment | Research sprints, before formulating new hypotheses |
+| **builder** | Implements features, writes production code and tests | Engineering sprints |
+| **reviewer** | Code review, architecture check, security audit, test coverage | Engineering sprints, before any delivery |
+
+### Team Patterns
+
+**Research Sprint** (`/research-sprint`):
+```
+Director (lead, delegate mode)
+  ├─ Surveyor    → Literature, SOTA, baselines (starts immediately)
+  ├─ Researcher  → Design & run experiments (may wait for baselines)
+  └─ Critic      → Challenge hypotheses, experiment design, findings
+```
+
+**Engineering Sprint** (`/engineering-sprint`):
+```
+Director (lead, delegate mode)
+  ├─ Builder     → Implement feature (plan approval required)
+  ├─ Reviewer    → Code review, architecture, tests
+  └─ Critic      → Challenge approach, find edge cases, security
+```
+
+**Challenge Review** (`/challenge`):
+```
+Director spawns devil-advocate to review a specific target:
+  - Everything (full audit)
+  - Code (bugs, security, design)
+  - Research direction (hypotheses, methodology, findings)
+  - Engineering decisions (architecture, tech stack, trade-offs)
+  - KB health (consistency, orphans, staleness)
+```
+
+### When to Use Teams vs Solo
+
+| Situation | Approach |
+|---|---|
+| Simple bug fix or small feature | Solo — teams add overhead |
+| Research task with clear hypothesis | Solo researcher, then `/challenge` the results |
+| Complex research with unknown landscape | `/research-sprint` — parallel survey + execution + critique |
+| Feature with architectural implications | `/engineering-sprint` — build + review + critique in parallel |
+| Every 3 experiments (strategic review) | `/challenge` with "Research direction" — adversarial review is mandatory |
+| Before any major delivery | `/challenge` with "Code" — catch bugs before they ship |
+| Suspicion of local optimization | `/challenge` with "Everything" — full audit |
+
+### The Devil's Advocate Rule
+
+**Rule 5 is now enforced by an adversarial agent, not self-assessment.** The strategic review every 3 experiments MUST involve the devil-advocate agent, not just the Director answering its own questions. Self-review has inherent bias — an independent adversarial agent catches what you won't.
+
+Triggers that MUST spawn the devil's advocate:
+- Every 3 completed research experiments → automatic challenge review
+- Every major decision (D{NUM} in DECISIONS.md) → review before finalizing
+- Every feature delivery (IMP{NUM} → DONE) → code + approach review
+- CEO requests `/challenge` → on-demand review of specified target
+
+### Challenge Review Artifacts
+
+Reviews are written to `kb/reports/CR{NUM}-{slug}.md` with severity levels:
+- **CRITICAL**: Must address before proceeding
+- **HIGH**: Should address, significant risk
+- **MEDIUM**: Real issue, lower urgency
+- **LOW**: Improvement opportunity
+
+### Team Coordination Rules
+
+1. **Director stays in delegate mode** during sprints — coordinate, don't implement
+2. **Builder requires plan approval** — the lead reviews before coding starts
+3. **Critic reviews are blocking** — critical issues must be resolved before task completion
+4. **All artifacts go to `kb/`** — teammates follow the same registration rules
+5. **Last IDs are shared** — coordinate through BACKLOG.md to avoid ID conflicts
+6. **Clean up teams** — always shut down teammates and clean up when sprints finish
+
+---
+
 ## Strategic Review Protocol
 
 **Trigger**: After every 3 research experiments, or when hitting a performance plateau, or when the CEO requests it.
 
-**Purpose**: Prevent local optimization. Force yourself to question whether you're working on the right thing.
+**Purpose**: Prevent local optimization. Force an **external adversarial review** — not self-assessment.
+
+**Method**: Spawn the devil-advocate agent via `/challenge` with target "Research direction". The devil's advocate produces a `CR{NUM}` review. Then the Director writes the strategic review `SR{NUM}` incorporating the devil's advocate's findings.
 
 ### Mandatory questions
 
-Write answers to these in a strategic review file (`kb/reports/SR{NUM}-strategic-review.md`):
+Write answers to these in a strategic review file (`kb/reports/SR{NUM}-strategic-review.md`), incorporating the devil's advocate review (`kb/reports/CR{NUM}`):
 
 1. **What is our current ceiling?** What's the theoretical maximum of the approach we're pursuing? Are we close to it?
 2. **What haven't we tried?** List at least 3 fundamentally different approaches we haven't explored. Not variations — genuinely different architectures, models, or paradigms.
@@ -392,9 +477,14 @@ Every implementation must have:
 ```
 .
 ├── CLAUDE.md              ← This file (methodology + lessons learned)
+├── .claude/
+│   ├── agents/            ← Agent role definitions (devil-advocate, researcher, surveyor, builder, reviewer)
+│   ├── commands/          ← Slash commands (/challenge, /research-sprint, /engineering-sprint, etc.)
+│   └── settings.json      ← Enables agent teams
 ├── kb/                    ← Knowledge base (documentation, decisions, findings)
 ├── templates/             ← Templates for kb/ artifacts
 ├── scripts/               ← Utility scripts (sync, automation)
+├── skills/                ← Installable skills (article-strategy, notion-sync-kb)
 ├── experiments/           ← Experiment code, one directory per experiment (e.g., experiments/E001/)
 └── src/                   ← Engineering feature code
 ```
