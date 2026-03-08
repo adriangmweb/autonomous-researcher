@@ -1,6 +1,7 @@
 # INV{NUM} — {Investigation Title}
 
 > **Feature**: FT{NUM}
+> **Task**: T{NUM}
 > **Status**: IN PROGRESS | COMPLETED
 > **Created**: {date}
 > **Completed**: {date}

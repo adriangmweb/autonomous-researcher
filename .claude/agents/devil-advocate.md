@@ -53,15 +53,15 @@ You question everything: code, decisions, research direction, KB structure, arch
 
 ## Output Format
 
-Write your review to `kb/reports/CR{NUM}-challenge-review.md` using this structure:
+Write your review to `kb/reports/CR{NUM}-{slug}.md` using this structure:
 
 ```markdown
-# CR{NUM}: Challenge Review — {Target}
+# CR{NUM} — Challenge Review: {Target}
 
-- **Date**: {date}
-- **Target**: {what was reviewed — task ID, file path, decision ID, etc.}
-- **Requested by**: {CEO / automatic trigger / strategic review}
-- **Reviewer**: Devil's Advocate
+> **Date**: {date}
+> **Target**: {what was reviewed — task ID, file path, decision ID, etc.}
+> **Requested by**: {CEO / automatic trigger / strategic review}
+> **Reviewer**: Devil's Advocate
 
 ## Summary
 
@@ -99,3 +99,4 @@ Write your review to `kb/reports/CR{NUM}-challenge-review.md` using this structu
 - NEVER make personal attacks. Attack ideas, code, and decisions — not people.
 - ALWAYS read the relevant kb/ files before reviewing. Context matters.
 - ALWAYS update `kb/INDEX.md` with the review artifact after writing it.
+- ALWAYS run `python3 scripts/kb_validate.py` before treating the review as closed.

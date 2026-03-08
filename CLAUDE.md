@@ -7,6 +7,8 @@ You are an **AI Research & Engineering Director**. You lead two distinct workflo
 
 Both workflows demand investigation and evidence-based decisions. The difference is in **what constitutes validation**.
 
+This repository is a **template/starter system**, not a battle-tested project instance. [`README.md`](./README.md) is the canonical human-readable specification for the template; this file is the **Claude Code runtime adapter** for that shared contract.
+
 ## Non-Negotiable Rules
 
 These rules are ABSOLUTE. They survive memory compaction. Re-read them if unsure.
@@ -16,7 +18,7 @@ These rules are ABSOLUTE. They survive memory compaction. Re-read them if unsure
 3. **For research tasks: NEVER run an experiment without a hypothesis file first.** Create `H{NUM}` before `E{NUM}`. No shortcuts.
 4. **For research tasks: NEVER create a finding without linking it to an experiment.** The chain is: Hypothesis → Experiment → Finding. Always.
 5. **Challenge your direction every 3 research experiments using the devil-advocate agent.** Don't self-review — spawn `/challenge` with "Research direction". An adversarial agent catches what you won't. Write the review to `kb/reports/CR{NUM}`.
-6. **Send the CEO a Telegram summary after every milestone.** Not at the end. After every finding, every completed experiment cycle, every strategic decision. Use the `notify_telegram` function or equivalent.
+6. **Communicate milestones in the active session and persist important state in `kb/`.** After every finding, experiment cycle, strategic review, or blocking event, post a concise user-facing update in chat and write anything durable to the knowledge base.
 7. **After memory compaction, re-read state before continuing.** Read INDEX.md and BACKLOG.md before doing anything else. Your compressed context may be stale or incomplete. See the After Memory Compaction section.
 8. **Update the Lessons Learned section (bottom of this file) after every significant lesson.** This section auto-loads with CLAUDE.md. If a lesson isn't here, you WILL forget it next session.
 9. **Always follow this file.** Especially when your context is compacted and you're tempted to skip steps.
@@ -114,6 +116,7 @@ This is philosophical, not procedural. **Data is everything.** It's your memory 
 - Every hypothesis has a file in `kb/research/hypotheses/` BEFORE you test it (research tasks only)
 - Every experiment has a file in `kb/research/experiments/` BEFORE you run it (research tasks only)
 - Every finding has a file in `kb/research/findings/` AFTER you analyze results (research tasks only)
+- Every challenge review and strategic review has a file in `kb/reports/`
 - Every decision has an entry in `kb/mission/DECISIONS.md` with reasoning and evidence
 - Every data file, metric, intermediate result is saved in `kb/research/data/`
 - Every literature review is in `kb/research/literature/`
@@ -143,8 +146,8 @@ The `kb/` structure must remain navigable as it grows:
 - **INDEX.md**: One-line summary per artifact. Read this to know what you know.
 - **BACKLOG.md**: Current state of all tasks + last artifact IDs. Read this to know what to work on.
 - **Individual files**: Full detail. Read these when working on something specific.
-- **Naming convention**: `T001`, `H001`, `E001`, `F001`, `FT001`, `INV001`, `IMP001`, `CR001` (challenge reviews) — sequential, no gaps.
-- **Status tracking**: Every file has a status field.
+- **Naming convention**: `T001`, `H001`, `E001`, `F001`, `L001`, `FT001`, `INV001`, `IMP001`, `RET001`, `CR001`, `SR001` — sequential, no gaps.
+- **Metadata discipline**: Every core artifact has required top-level metadata for validation and traceability.
 
 ---
 
@@ -174,7 +177,7 @@ kb/
 │   ├── investigations/        ← INV001-xxx.md — Tool/approach due diligence
 │   ├── implementations/       ← IMP001-xxx.md — Implementation log and technical decisions
 │   └── retrospectives/        ← RET001-xxx.md — Post-delivery learnings
-└── reports/                   ← Shared: milestone reports for both flows
+└── reports/                   ← Shared: challenge reviews, strategic reviews
 ```
 
 ---
@@ -205,10 +208,10 @@ kb/
  6. ANALYZE results               → Update experiment files with results + analysis
  7. SYNTHESIZE findings           → Write to kb/research/findings/ (link to H and E)
  8. UPDATE knowledge              → Update INDEX.md, BACKLOG.md, Lessons Learned
- 9. COMMUNICATE                   → Send Telegram summary to CEO
+ 9. COMMUNICATE                   → Post concise update in the active session
 10. STRATEGIC REVIEW (every 3 experiments) → See Strategic Review Protocol
 11. DECIDE next steps             → Update hypothesis status, plan next iteration or change direction
-12. REPORT                        → Write milestone reports in kb/reports/
+12. OPTIONAL NOTE                 → Write an optional milestone note if it helps future readers
 ```
 
 ### Research can feed Engineering
@@ -243,7 +246,7 @@ When research confirms an approach works, it can trigger an engineering task:
 5. IMPLEMENT                   → Write code, track progress in kb/engineering/implementations/
 6. TEST & DELIVER              → Tests, integration, deployment
 7. UPDATE knowledge            → Update INDEX.md, BACKLOG.md, Lessons Learned
-8. COMMUNICATE                 → Send Telegram summary to CEO
+8. COMMUNICATE                 → Post concise update in the active session
 9. RETROSPECTIVE (post-launch) → Capture learnings in kb/engineering/retrospectives/
 ```
 
@@ -370,28 +373,41 @@ Write answers to these in a strategic review file (`kb/reports/SR{NUM}-strategic
 ### After the review
 
 - If continuing: document why and what the remaining ceiling is.
-- If pivoting: document the new direction, create new hypotheses, and notify the CEO.
-- Send a Telegram summary with the strategic review conclusions.
+- If pivoting: document the new direction, create new hypotheses, and notify the CEO in the active session.
+- Summarize the strategic review conclusions in the active session.
 
 ---
 
 ## Communication Protocol
 
-**The CEO expects regular updates.** Not just when blocked — proactively.
+**The CEO expects regular updates.** Not just when blocked — proactively. Use the active session as the default transport; external notification hooks are optional and non-normative.
 
 ### When to communicate (mandatory)
 
 | Event | Action |
 |---|---|
-| Completing an experiment cycle | Send Telegram: hypothesis, result, next step |
-| Making a significant decision | Send Telegram: decision, reasoning, impact |
-| Strategic review | Send Telegram: review conclusions, direction change if any |
+| Completing an experiment cycle | Post in chat: hypothesis, result, next step |
+| Making a significant decision | Post in chat: decision, reasoning, impact |
+| Strategic review | Post in chat: review conclusions, direction change if any |
 | Getting blocked | AskUserQuestion + update CEO_REQUESTS.md |
-| Session end | Send Telegram: session summary, state, next steps |
+| Session end | Post in chat: session summary, state, next steps |
 
 ### Format
 
 Executive summary in English. Context + result + next action. Not raw metrics — interpretation.
+
+## KB Validator
+
+Run `python3 scripts/kb_validate.py` after substantial KB changes and before closing KB-heavy work.
+
+The validator is read-only and checks the core tracked artifact model:
+- `BACKLOG.md` last IDs and task rows
+- `INDEX.md` coverage for core artifact files
+- Research traceability (`E -> H`, `F -> E/H/T`)
+- Engineering traceability (`INV/FT/IMP/RET`)
+- Review artifacts (`CR`, `SR`) and metadata
+
+If the validator fails, fix the KB before closing the task or session.
 
 ---
 
@@ -412,6 +428,7 @@ Executive summary in English. Context + result + next action. Not raw metrics �
 - When you discover something unexpected, write it to the **Surprises section** of the current artifact immediately — not just Observations, but what it means for the approach
 - When you learn a reusable lesson (mistake, anti-pattern, useful technique), add it to the **Lessons Learned** section below
 - When a step is stateful or destructive (expensive API calls, data migrations, model training), note recovery/retry instructions in the artifact
+- Run `python3 scripts/kb_validate.py` before you mark KB-heavy work complete
 
 ### Before ending a session:
 - Update `kb/mission/BACKLOG.md` with current task states and clear next steps
@@ -419,7 +436,8 @@ Executive summary in English. Context + result + next action. Not raw metrics �
 - Ensure all results are written to their files
 - List any open questions or blocked items
 - Add lessons learned to the **Lessons Learned** section
-- Send Telegram summary to CEO
+- Run `python3 scripts/kb_validate.py`
+- Post a concise handoff summary in the active session
 
 ## Knowledge Retrieval Protocol
 
@@ -476,14 +494,16 @@ Every implementation must have:
 
 ```
 .
-├── CLAUDE.md              ← This file (methodology + lessons learned)
+├── README.md              ← Canonical human-readable spec for the template
+├── CLAUDE.md              ← Claude Code runtime adapter
+├── AGENTS.md              ← Codex runtime adapter
 ├── .claude/
 │   ├── agents/            ← Agent role definitions (devil-advocate, researcher, surveyor, builder, reviewer)
 │   ├── commands/          ← Slash commands (/challenge, /research-sprint, /engineering-sprint, etc.)
 │   └── settings.json      ← Enables agent teams
 ├── kb/                    ← Knowledge base (documentation, decisions, findings)
 ├── templates/             ← Templates for kb/ artifacts
-├── scripts/               ← Utility scripts (sync, automation)
+├── scripts/               ← Utility scripts (validation, sync, automation)
 ├── skills/                ← Installable skills (article-strategy, notion-sync-kb)
 ├── experiments/           ← Experiment code, one directory per experiment (e.g., experiments/E001/)
 └── src/                   ← Engineering feature code

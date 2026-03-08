@@ -28,7 +28,7 @@ _Unexpected findings that shaped the work. Not reusable lessons (those go in Les
 
 ## Linked Artifacts
 
-- {H001, E001, FT001, INV001, IMP001...}
+- {H001, E001, FT001, INV001, IMP001, CR001, SR001...}
 
 ## Notes
 

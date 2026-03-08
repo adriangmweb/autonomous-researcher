@@ -1,6 +1,7 @@
 # L{NUM} — {Paper/Topic Title}
 
 > **Type**: PAPER | BLOG | REPO | BENCHMARK | SURVEY
+> **Task**: T{NUM}
 > **Date reviewed**: {date}
 > **Relevance**: HIGH | MEDIUM | LOW
 

@@ -1,6 +1,7 @@
 # FT{NUM} — {Feature Title}
 
 > **Status**: PROPOSED | INVESTIGATING | IN PROGRESS | DELIVERED | ITERATING
+> **Task**: T{NUM}
 > **Created**: {date}
 > **Delivered**: {date}
 

@@ -1,10 +1,10 @@
 # Backlog
 
-> **Last updated**: 2026-02-10
+> **Last updated**: 2026-03-08
 
 ## Last IDs
 
-> T: 000 | H: 000 | E: 000 | F: 000 | L: 000 | FT: 000 | INV: 000 | IMP: 000 | RET: 000
+> T: 000 | H: 000 | E: 000 | F: 000 | L: 000 | FT: 000 | INV: 000 | IMP: 000 | RET: 000 | CR: 000 | SR: 000
 
 ## Tasks
 

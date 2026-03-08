@@ -1,6 +1,7 @@
 # H{NUM} — {Title}
 
 > **Status**: PROPOSED | TESTING | CONFIRMED | REJECTED
+> **Task**: T{NUM}
 > **Created**: {date}
 > **Last updated**: {date}
 

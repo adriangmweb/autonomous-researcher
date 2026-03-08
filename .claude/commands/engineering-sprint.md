@@ -105,12 +105,13 @@ After all teammates finish:
 4. Update the task file with final status and linked artifacts
 5. Update `kb/mission/BACKLOG.md` with task status and new Last IDs
 6. Update `kb/INDEX.md` with all new artifacts
-7. Clean up the team
-8. Send Telegram summary to CEO
+7. Run `python3 scripts/kb_validate.py`
+8. Clean up the team
+9. Post a concise user summary in chat
 
 ### Phase 8: Communicate
 
-Send a Telegram summary:
+Post a concise summary in the active session:
 ```
 Engineering Sprint for T{NUM} complete.
 

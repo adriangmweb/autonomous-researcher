@@ -1,6 +1,8 @@
 # RET{NUM} — {Feature/Topic Title}
 
 > **Feature**: FT{NUM}
+> **Task**: T{NUM}
+> **Implementation**: IMP{NUM}
 > **Date**: {date}
 
 ## What was delivered

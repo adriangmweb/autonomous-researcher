@@ -1,7 +1,9 @@
 # F{NUM} — {Title}
 
 > **Date**: {date}
-> **Source**: E{NUM} / analysis / literature
+> **Task**: T{NUM}
+> **Hypothesis**: H{NUM}
+> **Experiment**: E{NUM}
 > **Impact**: HIGH | MEDIUM | LOW
 
 ## Finding

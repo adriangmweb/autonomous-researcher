@@ -1,6 +1,8 @@
 # IMP{NUM} — {Implementation Title}
 
 > **Feature**: FT{NUM}
+> **Task**: T{NUM}
+> **Investigation**: INV{NUM}
 > **Status**: IN PROGRESS | DELIVERED | NEEDS ITERATION
 > **Started**: {date}
 > **Delivered**: {date}

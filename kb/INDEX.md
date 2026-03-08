@@ -1,6 +1,6 @@
 # Knowledge Index
 
-> **Last updated**: 2026-02-10
+> **Last updated**: 2026-03-08
 
 Living summary of all accumulated knowledge. **Read this at session start** to know what you know without opening every file.
 
@@ -73,6 +73,14 @@ _None yet._
 ### Implementations
 _None yet._
 
+## Reviews
+
+### Challenge Reviews
+_None yet._
+
+### Strategic Reviews
+_None yet._
+
 ## Key Decisions
 
 | # | Type | Decision |
@@ -81,4 +89,4 @@ _None yet._
 
 ---
 
-**Maintenance rule**: Update this file every time you create, close, or significantly update any kb/ artifact. Keep each entry to one line. Details live in the individual files.
+**Maintenance rule**: Update this file every time you create, close, or significantly update any core kb/ artifact. Keep each entry to one line. Details live in the individual files.

@@ -80,10 +80,11 @@ After the review completes:
 2. Update `kb/INDEX.md` with the new review artifact
 3. Present the executive summary to the CEO with critical issues highlighted
 4. If critical issues were found, suggest immediate next steps
+5. Run `python3 scripts/kb_validate.py` before closing the review
 
 ### Phase 5: Communicate
 
-Send a Telegram summary to the CEO:
+Post a concise summary in the active session:
 ```
 Challenge Review CR{NUM} complete.
 
