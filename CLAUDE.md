@@ -497,10 +497,13 @@ Every implementation must have:
 ├── README.md              ← Canonical human-readable spec for the template
 ├── CLAUDE.md              ← Claude Code runtime adapter
 ├── AGENTS.md              ← Codex runtime adapter
+├── COOK.md                ← Agent-agnostic instructions injected by cook on every iteration
 ├── .claude/
 │   ├── agents/            ← Agent role definitions (devil-advocate, researcher, surveyor, builder, reviewer)
 │   ├── commands/          ← Slash commands (/challenge, /research-sprint, /engineering-sprint, etc.)
 │   └── settings.json      ← Enables agent teams
+├── .cook/
+│   └── config.json        ← cook orchestration config (agent, sandbox, step overrides)
 ├── kb/                    ← Knowledge base (documentation, decisions, findings)
 ├── templates/             ← Templates for kb/ artifacts
 ├── scripts/               ← Utility scripts (validation, sync, automation)

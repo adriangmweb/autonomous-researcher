@@ -10,10 +10,10 @@ Progress means better experiments, better findings, stronger baselines, better d
 
 This repository packages that operating model with persistent memory, explicit artifact trails, and validation rules so the research process remains reproducible instead of collapsing into chat history.
 
-It is compatible with **both Codex and Claude Code**:
+It is compatible with **Claude Code, Codex, and OpenCode**:
 
-- `AGENTS.md` is the runtime adapter for **Codex**
 - `CLAUDE.md` is the runtime adapter for **Claude Code**
+- `AGENTS.md` is the runtime adapter for **Codex** and **OpenCode**
 
 This repository is a **template/starter system**, not a battle-tested deployment. The repository history reflects the evolution of the system over multiple iterations.
 
@@ -44,14 +44,14 @@ The point is not only to run tasks autonomously, but to make **measurable resear
 
 ## Compatibility
 
-Autonomous Researcher keeps the same functional contract across both supported runtimes while adapting to their native mechanics.
+Autonomous Researcher keeps the same functional contract across all supported runtimes while adapting to their native mechanics.
 
-| Capability | Claude Code | Codex |
-|---|---|---|
-| Ask the user for missing information | `AskUserQuestion` | `request_user_input` or a direct question |
-| Delegate work | Slash commands and Claude agents | `spawn_agent` / `send_input` |
-| Communicate status | Active session/chat | Active session/chat |
-| Validate KB state | `python3 scripts/kb_validate.py` | `python3 scripts/kb_validate.py` |
+| Capability | Claude Code | Codex | OpenCode |
+|---|---|---|---|
+| Ask the user for missing information | `AskUserQuestion` | `request_user_input` or a direct question | Direct question |
+| Delegate work | Slash commands and Claude agents | `spawn_agent` / `send_input` | — |
+| Communicate status | Active session/chat | Active session/chat | Active session/chat |
+| Validate KB state | `python3 scripts/kb_validate.py` | `python3 scripts/kb_validate.py` | `python3 scripts/kb_validate.py` |
 
 `README.md` is the canonical human-readable spec. Runtime files are adapters, not the primary place for conceptual explanation.
 
@@ -62,7 +62,7 @@ Autonomous Researcher keeps the same functional contract across both supported r
   - research: `H -> E -> F`
   - engineering support: `INV -> FT -> IMP -> RET`
 - First-class review artifacts: `CR` and `SR`
-- Runtime-specific adapters for Codex and Claude Code
+- Runtime-specific adapters for Claude Code, Codex, and OpenCode
 - Core artifact templates
 - A read-only KB validator: `python3 scripts/kb_validate.py`
 - Optional Notion export tooling
@@ -80,6 +80,44 @@ Autonomous Researcher keeps the same functional contract across both supported r
 
 ```bash
 python3 scripts/kb_validate.py
+```
+
+## Autonomous Execution with cook
+
+[cook](https://rjcorwin.github.io/cook/) is a universal orchestration CLI that handles work-review-gate cycles across any agent runtime. Install it and use the recipes below to run the researcher autonomously.
+
+```bash
+npm install -g @let-it-cook/cli
+```
+
+**Continue research (open-ended):**
+```bash
+cook "Continue research" review \
+     "Review current status and verify if we achieved the target mission" \
+     "DONE if we achieved the target mission, else ITERATE"
+```
+
+**Research with iteration cap:**
+```bash
+cook "Continue research" review \
+     "Review current status and verify if we achieved the target mission" \
+     "DONE if we achieved the target mission, else ITERATE" \
+     --max-iterations 10
+```
+
+**Mixed agents (Codex work, Claude review):**
+```bash
+cook "Continue research" review \
+     "Review current status and verify if we achieved the target mission" \
+     "DONE if we achieved the target mission, else ITERATE" \
+     --work-agent codex --review-agent claude
+```
+
+**Challenge review:**
+```bash
+cook "Run /challenge with target 'Research direction'" review \
+     "Read the CR report and assess whether critical issues were addressed" \
+     "DONE if no critical issues remain, else ITERATE"
 ```
 
 The validator is read-only in v1. It checks:
